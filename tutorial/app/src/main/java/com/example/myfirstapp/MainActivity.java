@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
@@ -25,6 +28,21 @@ public class MainActivity extends AppCompatActivity {
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+    }
+
+    public void tabClick(View view) {
+        final int id = view.getId();
+        Map<Integer, Class<?>> buttonId2Activity = new HashMap<Integer, Class<?>>() {{
+            put(R.id.buttonCalls, CallLogActivity.class);
+        }};
+        Class<?> cls = buttonId2Activity.get(id);
+        if (cls != null) {
+            Intent intent = new Intent(this, cls);
+            startActivity(intent);
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Unknown button", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     @Override
